@@ -1,0 +1,36 @@
+﻿// Any timeFrame ok but good on 15 minute & 60 minute , Ichimoku + Daily-Candle_cross(DT) + HULL-MA_cross + MacD combination 420 special blend
+
+
+
+strategy("Ichimoku + Daily-Candle_X + HULL-MA_X + MacD", shorttitle="daco", overlay=true, default_qty_type=strategy.percent_of_equity, max_bars_back=720, default_qty_value=2, calc_on_order_fills= true, calc_on_every_tick=true, pyramiding=0)
+keh=input(title="Double HullMA",type=integer,defval=9, minval=1)
+dt = input(defval=0.00010, title="Decision Threshold (0.001)", type=float, step=0.0001)
+SL = input(defval=-70.00, title="Stop Loss in $", type=float, step=1)
+TP = input(defval= 120, title="Target Point in $", type=float, step=1)
+
+
+
+
+
+
+
+
+
+ot=1
+
+
+
+confidence=(security(tickerid, 'D', close)-security(tickerid, 'D', close[1]))/security(tickerid, 'D', close[1])
+
+
+
+
+
+
+
+longCondition = n1>n2 and strategy.opentrades<ot and confidence>dt and close>n2 and leadLine1>leadLine2 and open<LS and MACD>aMACD
+startdate = timestamp(2020,01,01,0,0)
+enddate = time
+if time >= startdate and time <= enddate
+    strategy.close("Long", when = closelong)
+    strategy.entry("Long",strategy.long, when = longCondition)
